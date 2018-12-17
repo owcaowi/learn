@@ -1,0 +1,75 @@
+
+
+Service:
+- app component that can perform long-running operations in the background
+- doesn't provide a user interface
+- another application component can start a service, and it continues to run in the background even if the user switches to another application
+- component can bind to a service to interact with it and even perform interprocess communication
+- service can be started from another App but you can block it putting service as private in manifest.
+
+
+There are three types of services:
+
+FOREGROUND
+- operation that is noticeable to the user (audio app)
+- must display a notification
+- continue running even when the user isn't interacting with the app
+
+BACKGROUND
+- operation that isn't directly noticed by the user (compact its storage)
+
+BOUND
+- offers a client-server interface that allows components to interact with the service, send requests, receive results, and even do so across processes with interprocess communication (IPC)
+- runs only as long as another application component is bound to it
+- multiple components can bind to the service at once, but when all of them unbind, the service is destroyed
+
+Kiedy service a kiedy thread?
+- service when run something in the background, even when the user is not interacting with your application
+- thread when perform work outside of your main thread, but only while the user is interacting with your application
+- jeżeli twój servis potrzebuje dużych zasobów CPU np jak podczas networking to lepiej utworzyć osobny Wątek w servisie. Możesz w ten sposób zredukować ryzyko (bo service dziala w glownm watku)
+
+Manifest:
+- android:exported to false
+- inne aplikacje nie mogą używać servisu
+- dobrym nawykiem jest też dodanie android:description. Uzytkownik może zastopować servis, którego nie zna. Opis pomoże uniknąć zamknięcia. 
+
+
+You can create service by:
+1) start service
+2) bound servic
+
+0) Bindujemy wtedy gdy musi być jakaś interakcja użytkownika z aplikacją. Przykład music player. Chcesz przełączyć piosenkę która leci w tle - interakcja.
+   Startujemy service kiedy jakieś zadanie ma być wykonane w tle i nie potrzebna jest interakcja. Ściąganie danych.
+
+1) 
+- Another component starts by calling startService(), which results in a call to the service's onStartCommand() method.
+- The service can run in the background indefinitely, even if the component that started it is destroyed.
+- the service should stop itself when its job is complete by calling stopSelf(), or another component can stop it by calling stopService().
+- The service receives this Intent in the onStartCommand() method.
+
+
+
+Extend class types:
+
+- Service 
+ * You have to create new thread because can slow the performance of any activity that your application is running.
+ * Might be appropriate if you need to handle simultaneous (w tym samy czasie) start requests.
+ * nStartCommand() return an integer (describe how the system should continue the service in the event that the system kills it)
+ 	-> START_NOT_STICKY
+ 	-> START_STICKY
+ 	-> START_REDELIVER_INTENT
+
+- IntentService
+ * Uses a worker thread to handle all of the start requests, one at a time. 
+ * This is the best option if you don't require that your service handle multiple requests at the same time
+ * Creates a work queue that passes one intent at a time to your onHandleIntent() implementation, so you never have to worry about multi-threading.
+ * Stops the service after all of the start requests are handled, so you never have to call stopSelf().
+ 
+Kiedy Service a kiedy IntentService:
+
+
+
+
+Pytania:
+2) sticky not sticky
+
