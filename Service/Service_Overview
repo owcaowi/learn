@@ -64,6 +64,7 @@ Extend class types:
  	-> START_REDELIVER_INTENT
 
 2) INTENTSERVICE
+- extends Service
 - Uses a worker thread to handle all of the start requests, one at a time. 
 - This is the best option if you don't require that your service handle multiple requests at the same time
 - Creates a work queue that passes one intent at a time to your onHandleIntent() implementation, so you never have to worry about multi-threading.
@@ -72,14 +73,16 @@ Extend class types:
 
 Kiedy Service a kiedy IntentService:
 ------------------------------------
+
+1) INTENTSERVICE
+- Prawie zawsze bo wszystko dzieje sie w osobnym wątku i mało boilerplate code.
+- Long task usually with no communication to main thread
+- Cannot run tasks in parallel
+
 1) SERVICE
 - kiedy jest bindowanie
 - Task with no UI, but shouldn't be too long
 - Use threads within service for long tasks
-
-2) INTENTSERVICE
-- Long task usually with no communication to main thread
-- Cannot run tasks in parallel
 
 
 

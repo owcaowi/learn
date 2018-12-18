@@ -1,0 +1,59 @@
+
+----------------------------
+		Intent Service
+----------------------------
+
+Tworzy kolejkę z intentów, które przychodzą jako parametr onHandleIntent.
+
+Jak to działa:
+Intent Service działa jak singelton. Jeżeli zastartujez 2 serwisy po sobie to będą one dodane do kolejki.
+Jeżeli zastopujesz servis to wykona on wszystkie zadania które są w kolejce i zakończy.
+Jeżeli zastopujesz i zaczniesz nową będą one dzialaly rownolegle.
+
+
+Słowa klucze
+------------
+- kolejka zadan
+- osobny wątek
+- metoda onHandleIntent
+
+
+Klasa główna:
+-------------
+
+public class MyIntentService extends IntentService {
+    
+    public MyIntentService() {
+        super("MyIntentService");
+    }
+
+    @Override
+    protected void onHandleIntent(@Nullable Intent intent) {
+    }
+}
+
+Activity
+--------
+
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+
+    Intent intent = new Intent(this, MyIntentService.class);
+    intent.putExtra(MyIntentService.NAME, MyIntentService.FIRST_TASK);
+    startService(intent);
+
+
+    Intent intent2 = new Intent(this, MyIntentService.class);
+    intent2.putExtra(MyIntentService.NAME, MyIntentService.SECOND_TASK);
+    startService(intent2);
+}
+
+
+Zatrzymanie servisu
+-------------------
+
+Z innego komponentu
+stopService(new Intent(this, MyIntentService.class));
+
+Z wenątrz siebie 
+stopSelf();
