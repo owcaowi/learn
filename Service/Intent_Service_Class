@@ -15,7 +15,7 @@ Słowa klucze
 ------------
 - kolejka zadan
 - osobny wątek
-- metoda onHandleIntent
+- callback method onHandleIntent
 
 
 Klasa główna:

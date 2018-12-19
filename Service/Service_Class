@@ -1,0 +1,27 @@
+
+----------------
+	Service
+----------------
+
+Ponieważ serwis działa w głównym wątku jeżeli to tylko możliwe powinno się używać bardziej IntentService.
+Najlepiej jest puścić wszystko w innym Threedzie:
+
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    runFirstTask();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        thread.start();
+
+        return START_STICKY;
+    }

@@ -28,6 +28,15 @@ BOUND
 - multiple components can bind to the service at once, but when all of them unbind, the service is destroyed
 
 
+Background czy Foreground
+-------------------------
+Od Androida O zostały wprowadzone limity jeżeli chodzi o używanie Bacground Servisów jeżeli apka jest w Backgroundzie. Zamiast tego powinno można zastąpić Bacgroundservice:
+- Jobsheduler
+- startForegroundservice (+ notification)
+
+More:
+https://www.youtube.com/watch?v=Pumf_4yjTMc
+
 Kiedy service a kiedy thread?
 -----------------------------
 - service when run something in the background, even when the user is not interacting with your application

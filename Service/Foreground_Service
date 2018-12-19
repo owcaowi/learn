@@ -1,0 +1,30 @@
+
+-------------------------
+	Foreground Service
+-------------------------
+
+Foreground service to taki o którego istnieniu wie użytkownik. Wie poprzez notyfikacje.
+
+
+W Activity:
+-----------
+
+    Intent intent = new Intent(this, MyService.class);
+    startForegroundService(intent);
+
+
+W samym servisie (callback onCreate):
+----------------------------------
+
+    Notification notification = getNotification();
+    // pierwszy parametr nie powinien byc zerem
+    startForeground(1, notification);
+
+
+Stop Service:
+------------
+
+Uwaga!
+Nie możesz zatrzymać servisu zanim nie wykona się startForegroundService z on Create!
+
+stopService(new Intent(this, MyService.class));
