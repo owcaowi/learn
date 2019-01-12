@@ -1,0 +1,40 @@
+
+
+----------------------
+ 	Custom Spinner
+----------------------
+
+
+	ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(), R.array.default_array, R.layout.spinner_item);
+	mLicenseplateSpinner.setAdapter(adapter);
+
+
+	Array:
+	------
+
+	<string-array name="default_array">
+        <item>Array Item One</item>
+        <item>Array Item Two</item>
+        <item>Array Item Three</item>
+    </string-array>
+
+
+    Spinner Item:
+    -------------
+
+	<?xml version="1.0" encoding="utf-8"?>
+	<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    	style="@style/FormSpinnerItem"
+	    android:singleLine="true"
+    	android:background="@null"
+    	android:ellipsize="end"
+    	android:textAlignment="inherit"/>
+
+
+    Spinner:
+    ---------
+
+       <Spinner
+                android:background="NEW_ARROW"
+                >
+

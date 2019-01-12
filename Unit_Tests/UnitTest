@@ -1,0 +1,49 @@
+-------------------------
+	   Unit tests
+-------------------------
+
+Po co pisać testy?
+------------------
+- po to aby w przypadku ewentualnej zmiany implementacji kodu miec pewność, że kod zadziała dla wszystkich casów
+
+
+
+Kiedy warto pisać?
+------------------
+- kiedy duży projekt z wieloma programistami i kod często ulega zmianie
+- kiedy fragmenty kodu są używane w wielu miejscach
+- dla funkcji z których korzysta wiele elemwntów systemu ( np. jeżeli z funkcji xyz korzysta wiele elementów. Z jakiś powodów musimy zmodyfikować funkcję xyz dla jednego z elementów bo zmieniła się jego implementacja możemy w bardzo szybki spób wiedzieć czy dla innych elementów wynik końcowy się nie zmieni )
+
+
+Zalety:
+-------
+- wymusza pisanie przemyślanego kodu (wymusza ponowe zaimplementowanie funkcji lub refaktoryzację, cieżko napisać test do czegoś co jest zagmatwane, byłoby to czasochłonne)
+- oszczedność czasu (czego nie przetestujesz w kodzie, musisz przetestować ręczie)
+- dzięki testom możemy pozwolić sobie na refaktoryzację dużego projektu (nie musisz testowac każdego fragmentu ręcznie zrobi to test)
+
+
+
+Jakie powinno być pokrycie kodu testami jednostkowymi?
+------------------------------------------------------
+Nie ma odp zależy od projektu. Szacuje się że ok 30% - 40%
+UI Tests: 10%
+Integration Tests: 20%
+Unit Tests: 70%
+
+
+Mocking frameworks:
+-------------------
+- Mockito for unit test (used for making mocks of your classes)
+- Espresso for UI test
+- Robolectric in your Integration Test if there are some dependencies on Android SDK.
+
+
+Project organisation:
+---------------------
+app/src/test/java - for any unit test which can run on the JVM (local unit tests)
+app/src/androidTest/java - for any test which should run on an Android device
+
+
+
+
+

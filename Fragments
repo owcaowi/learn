@@ -1,0 +1,27 @@
+
+
+  ----------------------
+  	Fragments
+  ----------------------
+
+
+	In Activity:
+
+        FragmentManager manager = getSupportFragmentManager();
+        ListFragment fragment = ListFragment.getInstance();
+
+        manager.beginTransaction()
+                .add(R.id.fragmentContainer, fragment)
+                .commit();
+
+
+
+    In Fragment:
+
+    public static ListFragment getInstance() {
+
+        if( ourInstance==null ){
+            ourInstance = new ListFragment();
+        }
+        return ourInstance;
+    }

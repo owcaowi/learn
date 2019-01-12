@@ -1,0 +1,137 @@
+
+----------------------
+     RecyclerView
+----------------------
+
+1. Do wersji Androida 5.0 ListView, GridView były preferowanym sposobem wyświetlania listy danych.
+2. ListView i GridView nie wymuszają użycia ViewHolderu.
+3. RecyclerView jest preferowanym sposobem ponieważ można go łatwiej rozszeżyć np. 
+ 	- horyzontalnie skrolowana lista
+ 	- animacja
+4. W Przypadku zaznaczania elementu patrz na viewtype (dołączona klasa)
+5. Pamiętaj o wyświetleniu napisu gdy lista jest pusta
+
+
+ Link:
+ https://www.bignerdranch.com/blog/a-view-divided-adding-dividers-to-your-recyclerview-with-itemdecoration/
+
+
+Top
+------------
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        LinkedList<String> titles = getTitles();
+
+        View view = inflater.inflate(R.layout.fragment_list, container, false);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        mAdapter = new MyAdapter(titles);
+        mRecyclerView.setAdapter(mAdapter);
+
+        return view;
+    }
+
+
+
+
+Holder
+------
+
+    public class MyHolder extends RecyclerView.ViewHolder implements View.OnClickListener  {
+
+        public TextView mTitle;
+
+        public MyHolder(LayoutInflater inflater, ViewGroup parent) {
+            super(inflater.inflate(R.layout.item, parent, false));
+
+            itemView.setOnClickListener(this);
+            mTitle = (TextView) itemView.findViewById(R.id.title);
+
+        }
+
+        public void bind(String title) {
+            mTitle.setText(title);
+        }
+
+        @Override
+        public void onClick(View v) {
+            // OnClick
+        }
+
+    }
+
+
+
+Adapter
+-------
+
+    private class MyAdapter extends RecyclerView.Adapter<MyHolder> {
+
+        private LinkedList<String> mTitles;
+
+        public MyAdapter(LinkedList<String> titles) {
+            mTitles = titles;
+        }
+
+        @Override
+        public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+            return new MyHolder(layoutInflater, parent);
+        }
+
+        @Override
+        public void onBindViewHolder(MyHolder holder, int position) {
+            String title = mTitles.get(position);
+            holder.bind(title);
+        }
+
+        @Override
+        public int getItemCount() {
+            return mTitles.size();
+        }
+    }
+
+
+
+
+R.layout.fragment_list
+———————————
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.RecyclerView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/recycler_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    />
+
+
+
+
+R.layout.item
+————————
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Title"/>
+
+</LinearLayout>
+
+
+
+
+
+
+
+

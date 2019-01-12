@@ -1,0 +1,11 @@
+Android dostarcza jednostek niezależnych od gęstości pixeli (density independent units). Dzięki temu elementy mają ten sam rozmiar na użądzeniach z różną gęsością. Android przekształca jednostki dp do pixeli podczas runtimu.
+
+Używane jednostki:
+dp/dip - density independent units
+sp - scale independent units (również density independent), używane do textu
+px - nie są polecanie ze względu na niezależność od density
+pt,mm,in - nie polecane bo nie wszystkie urządzenia wyświetlą je poprawnie.
+
+
+Różnica między sp a dp? 
+Żadna poza tym że sp można skalować z User Preferences. Jest tam opcja jakiej wielkości ma być tekst i jeżeli w appce jest ustawione sp to zostanie przeskalowany.

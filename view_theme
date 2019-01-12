@@ -1,0 +1,45 @@
+
+
+-----------------------
+ 	 View Theme
+-----------------------
+
+
+XML Layout:
+----------
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:theme="@style/BusinessTripTheme">
+
+        <TextView
+            android:textColor="?textColor" />
+
+        <ImageView
+            android:src="?timeIcon" />
+
+</LinearLayout>
+
+
+attrs.xml
+----------
+
+<resources>
+    <attr name="textColor" format="color|reference" />
+    <attr name="timeIcon" format="reference" />
+</resources>
+
+
+
+styles.xml
+----------
+    <style name="BusinessTripTheme" >
+        <item name="bgColor" >@color/white</item>
+        <item name="textColor">@color/grey</item>
+        <item name="timeIcon">@drawable/ic_icn_dots</item>
+    </style>
+
+    <style name="PrivateTripTheme" >
+        <item name="bgColor" >@color/platinium</item>
+        <item name="textColor">@color/grey</item>
+        <item name="timeIcon">@drawable/ic_icn_dots</item>
+    </style>

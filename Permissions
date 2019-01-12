@@ -1,0 +1,72 @@
+
+
+----------------------
+ Permissions Handling
+----------------------
+
+Postępowanie:
+0. Dodaj do Manifestu zezwolenia
+1. Zanim wykonasz jakiekolwiek czynności sprawdź czy masz zezwolenie.
+2. Zapytaj o zezwolenie jeżeli go nie masz.
+3. Wykonaj akcję w zależności od tego czy ktoś zezwolił czy nie. 
+
+
+Tipy:
+Jeżeli testujesz zezwolenia to łatwiej odinstalować apkę niż troglować w ustawieniach.
+
+
+Manifest:
+---------
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+
+
+Top:
+----
+
+    private static final int REQUEST_LOCATION_PERMISSIONS = 0;
+
+    // Każde zezwolenie należy do konkretnej grupy. 
+    //Jeżeli udzieliłeś któregokolwiek zezwolenia w grupie to wszystkie są dozwolone.
+    private static final String[] LOCATION_PERMISSION_GROUP = new String[]{
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+    };
+
+
+
+On Create:
+----------
+
+    if(hasLocationPermission()) {
+        setContentThatNeedPermission();
+    }else{
+        requestPermissions(LOCATION_PERMISSION_GROUP, REQUEST_LOCATION_PERMISSIONS);
+    }
+
+
+
+
+Dalej:
+------
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_LOCATION_PERMISSIONS:
+                if (hasLocationPermission()) {
+                    setContent();
+                }else{
+                    Log.d(TAG,"Enable Permissions!");
+                }
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    // checkSelfPermission sprawdza wersję, nie trzeba dodatkowych adnotacji
+    private boolean hasLocationPermission() {
+        int result = ContextCompat.checkSelfPermission(getActivity(), LOCATION_PERMISSION_GROUP[0]);
+        return result == PackageManager.PERMISSION_GRANTED;
+    }

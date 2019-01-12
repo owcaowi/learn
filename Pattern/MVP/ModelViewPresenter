@@ -1,0 +1,27 @@
+
+--------------------
+Model View Presenter
+--------------------
+
+- W tradycyjnej architekturze Androida (MVC) Activity jest widokiem i Controlerem 
+co utrudnia zrobienie testów. (mvc_model)
+
+- Celem użycia MVP jest odseparowanie Controlera od Widoku, żeby ułatwić testowanie.
+
+- Każdy view ma presentera, każdy presenter ma swojego view. (relacja 1:1)
+
+- View informuje Presentera o akcjach. Presenter wywoluje akcje i updatuje view. 
+View nie ma dostępu do modelu.
+
+- Dobrze jest użyć interfejsów, żeby mieć spis treści.
+
+
+
+Budowa: 
+
+- Activity/Fragment pełni fyunkcję widoku. Znajdują się w nim wszystkie 
+metody związane ze zmianą widoku. (pokaż produkty, ukryj test) W zależności 
+od tego co kliknie użytkownik na widoku to taka metoda Prezentera zostanie wywołana. 
+
+- Klasa Presenter zajmuje się logiką. W praktyce ma konstruktor ktory przyjmuje obiekt 
+widoku oraz zazwyczaj dependecy injections do modelu. Posiada metody z działające na obiekcie

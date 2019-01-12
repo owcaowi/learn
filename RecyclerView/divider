@@ -1,0 +1,23 @@
+
+
+-----------------------------
+	Recycle List Divider
+-----------------------------
+
+		Java:
+		-----
+
+		DividerItemDecoration itemDecorator = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+		itemDecorator.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.border_trip_item));
+		mRecyclerView.addItemDecoration(itemDecorator);
+
+
+
+		XML:
+		----
+
+		<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    				 android:shape="rectangle">
+    				<solid android:color="@color/platinium"/>
+    				<size android:height="1dp"/>
+		</shape>

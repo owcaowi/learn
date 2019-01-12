@@ -1,0 +1,10 @@
+
+---------------------
+Model View ViewModel
+---------------------
+
+- Dokładnie tak jak w przypadku MVP chodzi o odseparowanie logiki zwiazanej z widokiem od Activity.  
+
+- Istnieje obiekt (ViewModel), który łączy View z Modelem
+
+- w praktyce oznacza to: obiekt w którym znajdują się Listenery, funkcje zmieniające stan pól modelu

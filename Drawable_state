@@ -1,0 +1,24 @@
+
+
+--------------------------
+	Zapisywanie stanu
+--------------------------
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        /* Zaznaczanie ostatnio wybranego */
+        if( savedInstanceState != null ) {
+            int selectedPos = savedInstanceState.getInt(SELECTED_ITEM, 0);
+        }
+
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        /* Zaznaczanie ostatnio wybranego */
+        outState.putInt( SELECTED_ITEM, var );
+    }

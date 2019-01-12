@@ -1,0 +1,49 @@
+
+-----------------
+ My Localization
+-----------------
+
+
+onCreate
+
+        mClient = new GoogleApiClient.Builder(getActivity())
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
+                    @Override
+                    public void onConnected(@Nullable Bundle bundle) {
+                    	// check Permisions & getLoacation
+                    }
+
+                    @Override
+                    public void onConnectionSuspended(int i) {
+                    }
+                })
+                .build();
+
+onStart
+        mClient.connect();
+
+
+onStop
+        mClient.disconnect();
+
+
+
+@SuppressLint("MissingPermission")
+
+    private void getLocation(){
+
+        LocationRequest request = LocationRequest.create();
+        request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        request.setNumUpdates(1);
+        request.setInterval(0);
+        LocationServices.FusedLocationApi
+                .requestLocationUpdates(mClient, request, new LocationListener() {
+                    @Override
+                    public void onLocationChanged(Location location) {
+                    	// convert to LatLng
+                        LatLng myLoc = new LatLng(location.getLatitude(),location.getLongitude());
+                    }
+                });
+
+    }

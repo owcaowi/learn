@@ -1,0 +1,49 @@
+
+--------------------------------
+ 		Podstawowe info
+--------------------------------
+
+
+SDK - zestaw narzędzi przeznaczony to tworzenia aplikacji na Android. Składa się z SDK Tools oraz Platform Tools (zmodyfikowanych pod kontem konkretnych wersji systemu). 
+
+
+
+Minimum SDK Version
+-------------------
+Minimalna wersja systemu na, której może być zainstalowana APKa.
+
+Percentage of devices in use:
+https://developer.android.com/about/dashboards/index.html
+
+Czyli np. KitKat jest dobrym wyborem.
+
+Zapisane w build.gradle ale nadpisuje AndroidManifest
+
+
+
+Target SDK Version
+------------------
+Mówi dla jakiej wersji systemu apka została zaprojektowana. Zazwyczaj jest to ostatnia.
+
+Kiedy podać mniejszą wersję niż ostatnią np. gdy pewne rzeczy zostaną wyświetlone inaczej.
+
+Zapisane w build.gradle ale nadpisuje AndroidManifest
+
+
+
+Compile SDK Version
+-------------------
+Informacja między tobą a kompilatorem, której wersji użyć podczas budowania kodu. 
+Najlepiej użyć tutaj ostatniej wersji.
+Nie zapisane w AndroidManifest
+
+
+VersionName
+-----------
+String, zazwyczaj w formie 4.0.2. Nie ma ogólnie znaczenia, jest wyswietlane tylko dla użytkownika.
+
+
+VersionCode
+-----------
+Integer. Ważne, numer który definiuje, która wersja jest nowsza, żeby użytkownik nie zainstalował wczesnejszej.  
+

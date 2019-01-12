@@ -1,0 +1,73 @@
+public class main extends ActionBarActivity {
+
+    /* CAST THE VIEW  */
+    @Bind(R.id.hello)
+    TextView textView;
+
+    /* RESOURCE BINDING */
+    @BindColor(R.color.my_blue)
+    int blue;
+
+    /* VIEW LISTS */
+    @Bind({ R.id.first, R.id.second, R.id.third })
+    List<EditText> list;
+
+    /*
+        ONCLICK LISTENER
+        Add nullable if id might be not there
+    */
+    @Nullable
+    @OnClick(R.id.hello)
+    public void submit() {
+        Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show();
+    }
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+
+        textView.setText("click me");
+        textView.setTextColor(blue);
+
+	/* Dodawanie obiektom właściwośći hurtowo */
+        ButterKnife.apply(list, ALLCAPS);
+        ButterKnife.apply(list, COLOR, blue);
+
+    }
+
+
+    static final ButterKnife.Action<TextView> ALLCAPS = new ButterKnife.Action<TextView>() {
+
+        @Override public void apply(TextView view, int index) {
+            view.setBackgroundColor(Color.YELLOW);
+
+        }
+    };
+
+    static final ButterKnife.Setter<TextView, Integer> COLOR = new ButterKnife.Setter<TextView, Integer>() {
+        @Override
+        public void set(TextView view, Integer value, int index) {
+            view.setTextColor(value);
+        }
+    };
+
+}
+
+
+
+/* ViewHolder */
+public class CarViewHolder extends RecyclerView.ViewHolder{
+
+    @BindView(R.id.car_name) public TextView carName;
+    @BindView(R.id.car_type) public ImageView carType;
+
+    public CarViewHolder(View itemView) {
+        super(itemView);
+        ButterKnife.bind(this, itemView);
+    }
+}

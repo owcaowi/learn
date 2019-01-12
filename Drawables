@@ -1,0 +1,35 @@
+-----------------
+    Drawables
+-----------------
+
+Mamy 6 folderów z grafiką (ldpi,mdpi,hdpi,xhdpi,xxhdpi,xxxhdpi). 
+Dobrą metodą w przypadku dużych projektów jest dodanie większego obrazka i skalowanie go do mniejszych formatów zamiast wstawianie innej wersji dla każdej rozdzielczości.
+
+
+
+Jeżeli chodzi o grafiki w Androidzie masz do wyboru:
+
+1. Grafiki typu ....
+
+W zależności od gęstości pobierany jest obrazek z odpowiedniego folderu. Jeżeli chcesz zmniejszyć wielkość apk możesz wrzucić jeden obrazek w większej rozdzielczości tak by został on przeskalowany, zamiast umieszczania w projekcie 10 różnych wariantów. 
+
+2. XML drawables
+Są niezależne od gęstości. Łatwo je zmienić.
+
+3. Mipmap
+Folder używany dla ikonek launchera. Wszystkie inne images do drawable. Wynika to z tego że niektóre launchery (chyba systemowe) wybierają większą rozdzielczość ikonki co powoduje brak widoku dla największej. 
+
+4. 9-Path Images
+Jeżeli chcesz rozszerzyć tylko część ikonki.
+https://developer.android.com/studio/write/draw9patch.html
+
+
+
+Linki
+————
+
+Pozycjonowanie obrazka w ImageView: 
+https://guides.codepath.com/android/Working-with-the-ImageView
+
+Przetwarzanie obrazu:
+https://www.img-bak.in

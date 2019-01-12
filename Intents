@@ -1,0 +1,87 @@
+
+
+----------------------
+	Intents
+----------------------
+
+Są 2 typy Intencji w Androidzie.
+- jawne (explicit) - Kierowane do konkretnej klasy wewnątrz naszej aplikacji. 
+- niejawne (implicit) - Kierowane do bliżej nieokreślonej aplikacji, które zgłaszają umiejętność wykonania zadania.  
+
+W przypadku intencji niejawnych otwiera się Chooser. Jeżeli chooser się nie otworzył oznacza to, że albo użytkownik wcześniej odhaczył "zawsze otwieraj przy pomocy" albo jest tylko jedna aplikacja, która mogłaby to otworzyć.
+
+
+Explicit
+--------
+
+        Intent intent = new Intent(this, MapActivity.class);
+        intent.putExtra("SOME_ID", 4);
+	// Serializable obj
+        intent.putExtra("SERIALIZABLE", car);
+        startActivity(intent);
+
+
+	Odbiór:
+        Intent intent = this.getIntent();
+        int id = intent.getIntExtra("ID", 0);
+        Car car = (Car) intent.getSerializableExtra("SERIALIZABLE");
+
+
+Należy wspomnieć tu o interfejsach Serializable i Parcelable. Służą one do zapisu obiektu do strumienia bajtów. Transmisji obiektu między Activity. Serializable jest łatwiejsze w implementacji ale jest wolniejsze. Parcelable wymaga dodatkowego boilerplate kodu.
+
+
+Preferuje użycie Serializable wymaga zaimplementowania interfejsu.
+
+public class Car implements Serializable { … }
+
+More info” https://android.jlelse.eu/parcelable-vs-serializable-6a2556d51538
+
+
+Implicit
+--------
+
+	1) Wchodzenie w interakcję z inną apką 
+
+	Generalnie:
+	
+	Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("text/plain");
+        i.putExtra(Intent.EXTRA_TEXT, "SomeText");
+        i = Intent.createChooser(i, "Some title");
+
+	// sprawdzanie czy jest jakaś aplikacja, która by daną intencję odebrała.
+        PackageManager packageManager = getPackageManager();
+        if (packageManager.resolveActivity(i, PackageManager.MATCH_DEFAULT_ONLY) == null) {
+            startActivity(i);
+        }
+
+
+	Jeżeli twoja aplikacja dzieli się czymś z inną to ShareCompat.IntentBuilder (API level > 14):
+        Intent shareIntent = ShareCompat.IntentBuilder
+                .from(this)
+                .setType("text/plain")
+                .setText("Abcd")
+                .getIntent();
+        if (shareIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(shareIntent);
+        }
+
+
+	2) Start Activity for a result
+
+
+
+
+Odbieranie intentów od innej apki (Manifest):
+---------------------------------------------
+
+Uwaga! Category default jest wymagana.
+
+<activity android:name=”.ShareActivity”>
+  <intent-filter>
+    <action android:name=”android.intent.action.SEND”/>
+    <category android:name=”android.intent.category.DEFAULT”/>
+    <category android:name=”android.intent.category.BROWSABLE”/>
+    <data android:mimeType=”text/plain”/>
+  </intent-filter>
+</activity>

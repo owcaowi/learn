@@ -1,0 +1,39 @@
+
+------------------
+   Zapis Danych
+------------------
+
+Mamy następujące sposoby zapisu danych w Androidzie:
+- Shared preferences (tylko typy proste, key-value pairs)
+- File storage (internal, external)
+- Database
+
+
+Shared preferences
+------------------------------------------------------------------------------------------
+ Dane typu key-value, typy proste zapisane w pliku.
+
+ Możesz:
+
+ 1) Zapisać do konkretnego pliku podając jego nazwę jako pierwszy argument. 
+ 	Wtedy masz możliwość używania kilku plików w jednej Activity.
+
+
+ 		SharedPreferences sharedPref = context.getSharedPreferences(
+				getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+
+ 2) Zapisać do defaultowego. Widziane tylko w obrębie jednej activity:
+
+ 		SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+
+
+ZAPIS W SHARED PREFERENCES:
+
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.putInt(getString(R.string.saved_high_score_key), 7);
+		editor.commit();
+
+ODCZYT:
+
+		int highScore = sharedPref.getInt(getString(R.string.saved_high_score_key), defaultValue);

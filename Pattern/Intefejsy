@@ -1,0 +1,23 @@
+
+
+Możesz rozszerzyć jedną klasę ale zaimplementować wiele interfejsów. 
+
+
+Klasa abstrakcyjna 
+- nie można utworzyć jej obiektu
+- jeżeli conajmniej jedna metoda będzie abstrakcyjna to klasa musi być abstrakcyjna
+- jeżeli wszyskie metody sa abstrakcyjne to zaleca się interfejs
+- klasa sluzy do dziedziczenia
+- moga miec jakies metody z cialem ktore inne klasy beda dziedziczyly
+- metod abstrakcyjnych nie mozna oznaczyc jako statycznych 
+- możesz mieć stałe
+- metoda abstrakcyjna nie ma implementacji
+
+
+Interfejs
+- szczegółowy wymóg jaki muszą spełaniać klasy implementujące
+- wszystkie metody są domyślnie publiczne i abstrakcyjne
+- można ich używać jako typu ogólniejszego klas, które go implementują ( Pojazd rower = new Rower(); )
+- interfejs może rozszerzać tylko interfejsy (ale za to wiele z nich na raz co w przypadku klas jest zabronione)
+- niezbyt polecana metodą jest tworzenie dodatkowych metod w klasie implemetującej. Wtedy trzeba będzie uważac na ogólny typ klas. 
+(Pojazd rower = new Rower(); Rower rower = new Rower(); )

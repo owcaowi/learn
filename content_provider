@@ -1,0 +1,27 @@
+
+-------------------------
+	Content Provider
+-------------------------
+
+- używany do dzielenia danych między różnymi aplikacjami
+- dzięki interfejsowi Content Resolver dane zostają dostarczone do aplikacji
+- jeżeli nie musisz dzielić danych między aplikacjami użyj bazy danych
+- Przykład: Numery telefonów. Mogą być używane przez wiele aplikacji więc muszą zostać zapisane w Content Providerze.
+
+
+Jak to działa?
+
+1. Kiedy ContentResolver robi zapytanie, system szuka autority podanego w URI i dopasowuje zapytanie do content providera z podanym authority.
+
+2. Dane zapisane w postaci tabeli. Wiele tabel może być obsługiwane za pomocą jednego providera.
+
+3. Klasy:
+		
+		ContentProvider (dane)
+		ContentResolver (dostarcza dostęp do danych)
+		Uri (służy do identyfikacji tabel) 
+			content://Authority/path_to_table/path_to_row_id
+		Authority (nazwa Providera)
+
+4. System tworzy content providery. Jedna instancja na każdą klasę która dziedziczy po ContentProvider. Ta jedna instancja może odbierać jednocześnie wiele requestów od wielu content resolverów.
+

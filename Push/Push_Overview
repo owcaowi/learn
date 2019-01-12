@@ -1,0 +1,23 @@
+
+-------------------
+	   Push
+-------------------
+
+
+Keywords:
+---------
+deep-linking commands, payload, 
+
+GCM vs. FCM?
+------------
+Google Cloud Messaging - mobile notification service developed by Google. 
+Firebase Cloud Messaging
+
+How does it work?
+-----------------
+- On initial startup of your app, the FCM SDK generates a registration token for the client app instance. 
+- The registration token may change when:
+   -> The app deletes Instance ID
+   -> The app is restored on a new device
+   -> The user uninstalls/reinstall the app
+   -> The user clears app data.

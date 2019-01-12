@@ -1,0 +1,10 @@
+		JSONObject body = new JSONObject();
+
+		try {
+			body.put("username", username);
+			body.put("password", password);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		RequestBody requestBody = RequestBody.create(MediaType.parse(Cons.APP_TYPE_JSON), body.toString());

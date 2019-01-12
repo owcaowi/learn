@@ -1,0 +1,13 @@
+
+-----------------------
+ Image Capture & Share
+-----------------------
+
+1. Umieść Fileprovider w Manifest. Dodaj uses feature. Jeżeli twoja apka będzie wykorzystywała np. kamerę a użytkownik nie będzie jej miał w telefonie to aplikacja i tak da się ściągnąć z Google Store.
+2. Stwórz folder res/xml/files.xml i plik który będzie zawierał ścieżki.
+3. Kopjuj plik PictureUtils oraz stwórz layout.
+4. Główna logika znajduje się w PictureActivity.
+
+
+Potrzebujemy uzyskać zdjęcia z innej aplikacji. Ponieważ użycie External Storage byłoby zbyt ryzykowne (security reasons) używamy ContentProvidera. Content Provider ujawnia zawartość URI innym aplikacjom. Inne aplikacje mogą zapisywać lub ściągać coś z podanego URI. Można sterować dostępem dla innych apek. 
+Używamy FileProvider, która jest klasą ContentProvidera. 

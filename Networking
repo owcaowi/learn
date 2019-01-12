@@ -1,0 +1,33 @@
+
+
+------------------------
+	   Networking
+------------------------
+
+
+Request Formats:
+	- SOAP (messaging protocol specification)
+	- RPC (np. JSON-RPC, XML-RPC, remote procedure call protocol encoded in some format)
+	- REST (architectural style)
+
+
+Rodzaje wywołań:
+	- synchroniczne (wstrzyma kod do wykonania)
+	- asynchroniczne (callback)
+
+Sceneariusz:
+	- User-Agent
+	- Timeout
+	- call.cancel ( na zniszczonym fragmencie, apka w tle )
+	- onConfigurationChanges
+	- redirection
+	- pusta lista (default text)
+
+Networking Libraries:
+
+	- Retrofit 2.0
+	- Volley
+
+
+
+

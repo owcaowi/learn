@@ -1,0 +1,142 @@
+
+
+------------------------------------
+	XML naming convention
+------------------------------------
+
+
+<WHAT>_<WHERE>_<DESCRIPTION>_<SIZE>
+
+Uwaga! 
+- Staraj się nie nazywać Activty i Fragmentów w ten sam sposób bo będą konflikty w where.
+- snake_case for XML, camelCase for Java
+
+https://jeroenmols.com/blog/2016/03/07/resourcenaming/
+https://github.com/ribot/android-guidelines/blob/master/project_and_code_guidelines.md
+
+
+
+Layout
+-------
+
+<WHAT>_<WHERE>
+
+What: activity, fragment, view (nieincludowany), item, partial (inkludowany), dialog.
+
+Przykład:
+ArticleRecyclerView Item: item_article
+
+
+
+Id's
+----
+
+<WHAT>_<WHERE>_<DESCRIPTION>
+
+tablayout_main 
+imageview_menu_profile
+textview_articledetail_title
+
+Uwaga! Ta konwencja może być za długa.
+
+
+String
+------
+
+<WHERE>_<DESCRIPTION>
+
+Jeżeli <WHERE> nie jest jednoznacze to piszemy all.
+
+articledetail_title gdzie string jest tytułem w ArticleDetailFragment
+feedback_namehint gdzie text jest hintem w FeedbackFragment
+all_done powrzechnie użyty w projekcie text done
+
+
+
+Drawable
+--------
+
+<WHERE>_<DESCRIPTION>_<SIZE>
+
+articledetail_placeholder placeholder w ArticleDetailFragment
+all_infoicon_large duża infoikonka
+all_infoicon_24dp średniainfoikonka
+
+
+
+Normal		_normal	btn_order_normal.9.png
+Pressed		_pressed	btn_order_pressed.9.png
+Focused		_focused	btn_order_focused.9.png
+Disabled	_disabled	btn_order_disabled.9.png
+Selected	_selected	btn_order_selected.9.png
+
+
+
+Color
+------
+Używaj popularnej nazwy koloru.
+
+
+
+Dimensions
+----------
+
+<WHAT>_<WHERE>_<DESCRIPTION>_<SIZE>
+
+Typy <WHAT>: width, height, size, margin, padding, elevation, keyline, textsize
+Examples: height_toolbar, keyline_listtext, textsize_medium, size_menu_icon, height_menu_profileimage
+
+Style
+-----
+Pisane w CamelCase.
+
+
+
+Acronyms as words
+-----------------
+Good	Bad
+XmlHttpRequest	XMLHTTPRequest
+getCustomerId	getCustomerID
+String url	String URL
+long id	long ID
+
+
+Class member ordering
+---------------------
+Constants
+Fields
+Constructors
+Override methods and callbacks (public or private)
+Public methods
+Private methods
+Inner classes or interfaces
+
+
+Other
+-----
+
+Good: 
+if (condition) body();
+
+Bad:
+if (condition)
+    body();  
+
+
+
+Annotations
+-----------
+
+Class:
+
+@AnnotationA
+@AnnotationB
+public class MyAnnotatedClass { }
+
+
+Fields:
+
+@Nullable @Mock DataManager mDataManager;
+
+
+

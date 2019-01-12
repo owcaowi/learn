@@ -1,0 +1,76 @@
+
+---------------------------
+	Flavours
+---------------------------
+
+Przejście między Flavorami/Buildami 
+
+
+Build Types a Flavours
+-----------------------
+
+Build Type -> Mówi jak zostanie skomilowany kod (show/hide HTTP request logs, which 
+key should use, minify, different package names).
+
+Flavours -> Same app, different behaviour. (different themes, different functions)
+
+
+To Do:
+-----
+
+1) Stwórz conajmniej 2 typy flavorów.
+
+gradle/android:
+
+    productFlavors {
+
+        admin {
+            applicationIdSuffix ".admin"
+        }
+
+        user {
+            applicationIdSuffix ".user"
+        }
+    }
+
+2) Stwórz foldery z nazwami odpowiadająymi nazwami flavorów pod .../app_name/app/src. 
+Układ podfoderów powinien odpowiadać temu z main.
+
+3) Nadpisywanie stringów
+Dodaj ten sam string z inną zawarością a zostanie nadpisany. 
+Dobrą praktyką jest przeniesienie stringów unikatowych dla flavorów do osobnego pliku 
+i nazwanie ich np. strings_flavourname.xml 
+
+4) Nadpisywanie klas
+Musisz stworzyć 2 osobne pliki klas  jeżeli mają się czymś od siebie różnić. 
+Musisz też wywalić klasę z głównego folderu, żeby komilator nie miał problemów.
+Dobrym motywem jest tworzenie wspólnego interfejsu lub klasy abstrakcyjnej. 
+
+5) Nazwa aplikacji: 
+
+Manifest:
+        <activity
+            android:name=".StartActivity"
+            android:label="@string/app_name">
+
+            <intent-filter> …</intent-filter>
+
+        </activity>
+
+
+Uwaga: Jeżeli nie masz żadnego labela w activity to będzie brany label z intent-filter
+
+Gradle:
+
+    productFlavors {
+
+        admin {
+            applicationIdSuffix ".admin"
+            resValue "string", "app_name", "App Admin"
+        }
+
+        user {
+            applicationIdSuffix ".user"
+            resValue "string", "app_name", "App User"
+        }
+    }
