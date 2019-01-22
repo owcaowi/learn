@@ -1,0 +1,66 @@
+apply plugin: 'com.android.application'
+
+android {
+
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
+    flavorDimensions "default"
+
+    defaultConfig {
+        applicationId "com.example.aprzybylo.learn"
+        minSdkVersion 15
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+
+        admin {
+            applicationIdSuffix ".admin"
+            resValue "string", "app_name", "App Admin"
+        }
+
+        user {
+            applicationIdSuffix ".user"
+            resValue "string", "app_name", "App User"
+        }
+    }
+}
+
+dependencies {
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    api 'com.android.support:multidex:1.0.3'
+    //noinspection GradleCompatible
+    api 'com.android.support:appcompat-v7:28.0.0'
+    api 'com.google.android.gms:play-services-location:16.0.0'
+//    api 'com.google.android.gms:play-services-maps:11.8.0'
+    api 'com.google.android.gms:play-services:12.0.1'
+    api 'com.android.support:support-v4:28.0.0'
+    api 'com.google.firebase:firebase-messaging:17.3.4'
+
+    implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+   // implementation 'com.android.support.constraint:constraint-layout:2.0.0-alpha3'
+    api 'com.android.support:design:28.0.0'
+   // androidTestapi 'com.android.support.test:runner:1.0.1'
+    //androidTestapi 'com.android.support.test.espresso:espresso-core:3.0.1'
+    implementation 'com.google.code.gson:gson:2.8.4'
+    implementation 'com.jakewharton:butterknife:10.0.0'
+    implementation 'com.jakewharton:butterknife:10.0.0'
+    api 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+    implementation 'com.github.bumptech.glide:glide:3.8.0'
+    api 'com.android.support:gridlayout-v7:28.0.0'
+    implementation 'com.google.firebase:firebase-core:16.0.5'
+   // testApi()
+
+}
+
+apply plugin: 'com.google.gms.google-services'

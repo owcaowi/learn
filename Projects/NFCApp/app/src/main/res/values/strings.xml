@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">NFCApp</string>
+    <string name="title_activity_nfc">NFCActivity</string>
+</resources>

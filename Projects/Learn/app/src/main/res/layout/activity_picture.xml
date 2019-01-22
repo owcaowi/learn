@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.aprzybylo.learn.PictureActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/photo"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:background="@android:color/darker_gray"
+            android:cropToPadding="true"
+            android:scaleType="centerInside" />
+
+        <ImageButton
+            android:id="@+id/capture_photo"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:src="@android:drawable/ic_menu_camera" />
+
+        <Button
+            android:id="@+id/share_photo"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Share Img"
+            />
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

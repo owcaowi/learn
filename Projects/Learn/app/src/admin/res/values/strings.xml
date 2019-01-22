@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="headline">Admin headline</string>
+    <string name="content_provider">com.example.aprzybylo.learn.admin.provider</string>
+</resources>
