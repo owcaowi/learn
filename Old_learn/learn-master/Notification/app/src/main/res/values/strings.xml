@@ -1,0 +1,11 @@
+<resources>
+
+    <!-- Main Activity -->
+    <string name="app_name">Notification</string>
+    <string name="main_message">Please: \n - Change Airplane Mode \n - Connect Power  </string>
+
+    <!-- Other Activity -->
+    <string name="other_header">Thank you!</string>
+    <string name="other_message">You have just changed:</string>
+
+</resources>

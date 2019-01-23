@@ -1,0 +1,21 @@
+public class Przyklad {
+
+    private static Przyklad ourInstance = null;
+    public int param;
+
+    private Przyklad( int param ) {
+    }
+
+    public static Przyklad getInstance( int param ) {
+
+        if( ourInstance==null ){
+            ourInstance = new Przyklad( param );
+        }
+        return ourInstance;
+    }
+
+}
+
+// Use
+
+    Przyklad abcd = Przyklad.getInstance(this);

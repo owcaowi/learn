@@ -1,0 +1,108 @@
+   
+   THEMS/STYLES
+   
+   Style 
+      - pojedyńcza grupa wlasciwosci
+      - definiujemy w layoucie
+   Thems 
+      - zgrupowanie styli np. konkretne dla kazdego buttonu czy textview.
+      - definiujemy w Manifescie
+      - styl z theme mozna nadpisac
+ 
+   -----------------------
+   res/layout/main.xml
+   -----------------------
+    
+   <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/RoseTextView"
+        android:text="Big green text2!" />
+        
+        
+    -----------------------
+    AndroidManifest.xml
+    -----------------------
+     
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity" android:theme="@style/GreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+     </application>
+  
+  -----------------------
+  res/values/styles.xml
+  -----------------------
+   
+   <!--  DEFINICJA STYLU  -->
+    <style name="LargeFont">
+        <item name="android:textSize">40sp</item>
+    </style>
+
+    <!--  DZIEDZICZENIE - 2 SPOSOBY -->
+    <style name="LargeGreenFont" parent="@style/LargeFont">
+        <item name="android:textColor">@color/green</item>
+    </style>
+
+    <style name="LargeFont.Green" parent="@style/LargeFont">
+        <item name="android:textColor">@color/green</item>
+    </style>
+
+
+    <!-- DEFINICJA THEME (Theme skupia kilka stylów. Narzucamy zazwyczaj Activity w Manifeście.) -->
+    <style name="GreenTheme" parent="AppTheme">
+        <item name="android:textViewStyle">@style/GreenTextView</item>
+        <item name="android:buttonStyle">@style/BlueButtonStyle</item>
+    </style>
+
+    <!-- TEXTVIEW STYLE -->
+    <style name="GreenTextView">
+        <item name="android:textSize">40sp</item>
+        <item name="android:textColor">@color/green</item>
+    </style>
+
+    <!-- BUTTON STYLE -->
+    <style name="BlueButtonStyle">
+        <item name="android:background">@drawable/button_style</item>
+        <item name="android:textColor">#ffffffff</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!-- STYL INNY NIŻ DEFAULTOWY -->
+    <style name="RoseTextView">
+        <item name="android:textSize">40sp</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+    
+    
+  -----------------------
+  res/dravable/xyz.xml
+  -----------------------
+  
+  <?xml version="1.0" encoding="utf-8"?>
+  <selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+      <!-- Kolejnosc ma znaczenie. Czy jest on click listener ma znaczenie. -->
+      <item android:drawable="@color/medium_turquoise" android:state_pressed="true" />
+      <item android:drawable="@color/colorAccent"  android:state_pressed="false" />
+  </selector>
+  
+  
+  -----------------------
+  Dostęp do atrybutów Theme
+  -----------------------
+
+  <Button 
+   ...
+   android:background="?attr/colorAbc"
+   />
+    
+    

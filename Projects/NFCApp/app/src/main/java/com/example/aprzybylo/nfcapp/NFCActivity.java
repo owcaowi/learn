@@ -8,12 +8,17 @@ import android.nfc.tech.MifareUltralight;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
 import java.io.IOException;
 import java.math.BigInteger;
-import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
 
+
+/**
+ * Class responsible for reading NFC TAG on driver's license
+ *
+ */
 
 public class NFCActivity extends AppCompatActivity {
 
@@ -26,11 +31,11 @@ public class NFCActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nfc);
 
-        mRFid = readTag(getIntent());
+        mRFid = performTagReading(getIntent());
         checkLicenseId(mRFid);
     }
 
-    private String readTag(Intent intent) {
+    private String performTagReading(Intent intent) {
 
         String mifareUltralightType = MifareUltralight.class.getName();
         String mifareClassicType = MifareClassic.class.getName();
@@ -46,14 +51,13 @@ public class NFCActivity extends AppCompatActivity {
                 }
 
                 if (techList.contains(mifareClassicType)) {
-                    return readMifareUltralight(nfcTag);
+                    return readMifareClassic(nfcTag);
                 }
             }
         }
 
         return null;
     }
-
 
     public String readMifareUltralight(Tag tag) {
 
@@ -64,11 +68,8 @@ public class NFCActivity extends AppCompatActivity {
             mifare.connect();
 
             byte[] payload = mifare.readPages(4);
-            String vispironTagText = new String(payload, Charset.forName("US-ASCII"));
+            rfid = getFormattedCode(payload);
 
-            if (vispironTagText.contains("VISPIRON")) {
-                rfid = getFormattedCode(payload);
-            }
 
         } catch (IOException e) {
             Log.d(TAG, Log.getStackTraceString(e));
@@ -106,9 +107,11 @@ public class NFCActivity extends AppCompatActivity {
     }
 
     private void checkLicenseId(String mRFid) {
-
-        if (mRFid == null) {
-            return;
-        }
+        //...
     }
+
+    private String readMifareClassic(Tag nfcTag) {
+        return new String();
+    }
+
 }
