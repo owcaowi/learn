@@ -1,0 +1,219 @@
+ /**
+     * Voice Recognition
+     */
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void requestPermission() {
+
+        if (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.RECORD_AUDIO)
+                != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(mActivity,
+                    Manifest.permission.RECORD_AUDIO)) {
+                mAiButton.setVisibility(View.GONE);
+            } else {
+                ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.RECORD_AUDIO},
+                        MY_PERMISSIONS_REQUEST_RECORD_AUDIO);
+            }
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == BookingListFragment.MY_PERMISSIONS_REQUEST_RECORD_AUDIO) {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                initVoiceButton();
+            }
+        }
+    }
+
+    public void initVoiceButton() {
+
+        /* Record Audio Permissions */
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.RECORD_AUDIO)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermission();
+            }
+        }
+
+        if (aiService != null) {
+            return;
+        }
+
+
+        final AIConfiguration config = new AIConfiguration(ACCESS_TOKEN,
+                getDialogFlowLanguage(),
+                AIConfiguration.RecognitionEngine.System);
+
+        config.setRecognizerStartSound(getResources().openRawResourceFd(R.raw.test_start));
+        config.setRecognizerStopSound(getResources().openRawResourceFd(R.raw.test_stop));
+        config.setRecognizerCancelSound(getResources().openRawResourceFd(R.raw.test_cancel));
+
+        mAiButton.initialize(config);
+        mAiButton.setResultsListener(this);
+
+        aiService = AIService.getService(getActivity(), config);
+        aiService.setListener(this);
+
+    }
+
+    @NonNull
+    private ai.api.AIConfiguration.SupportedLanguages getDialogFlowLanguage() {
+        switch (Locale.getDefault().getLanguage()) {
+            case ("en"):
+                return ai.api.AIConfiguration.SupportedLanguages.English;
+            case ("de"):
+                return ai.api.AIConfiguration.SupportedLanguages.German;
+        }
+        return ai.api.AIConfiguration.SupportedLanguages.German;
+    }
+
+    @Override
+    public void onResult(final AIResponse response) {
+
+        if (response != null) {
+
+            String result = mSerializationHelper.toJson(response);
+
+            Log.v("CARSYNC", "voice: " + result);
+
+            DialogFlowResponse dialogFlowResponse = null;
+            try {
+                dialogFlowResponse = mMapper.readValue(result, DialogFlowResponse.class);
+
+            } catch (IOException e) {
+                Log.e(TAG, e.getLocalizedMessage());
+            }
+
+            // ActionInComplete? we need more Data from user
+            if (dialogFlowResponse.getResult().getActionIncomplete()
+                    // when user says something unclear
+                    || !dialogFlowResponse.getResult().getAction().equals(ACTION_BOOKING_DIALOG_FLOW)) {
+
+                String speech = dialogFlowResponse.getResult().getFulfillment().getSpeech();
+
+                // Message
+                Toast.makeText(mActivity, speech, Toast.LENGTH_SHORT).show();
+
+                // Speak message
+                TTS.speakOut(speech, mTTSId);
+                // Listen to user after Speaking to user
+                TTS.getTextToSpeech().setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                    @Override
+                    public void onStart(String utteranceId) {
+
+                    }
+
+                    @Override
+                    public void onDone(String utteranceId) {
+                        // SpeechRecognizer should be used only from the application's main thread
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (aiService != null) {
+                                    aiService.startListening();
+                                }
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onError(String utteranceId) {
+
+                    }
+                });
+
+            }
+            // ActionComplete we can do the Booking now
+            else if (!dialogFlowResponse.getResult().getActionIncomplete()) {
+                // Finish Dialog, Stop Listening to user
+                TTS.getTextToSpeech().setOnUtteranceProgressListener(null);
+                JsonRestCall postRequest = null;
+                String url = Cons.mVoiceRecPath;
+
+                try {
+
+                    postRequest = new JsonRestCall(Request.Method.PUT, url, new JSONObject(result), mActivity,
+                            new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    if (response != null) {
+                                        onVoiceBookingResponse(response);
+                                    }
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Log.e(TAG, error.getMessage());
+                                }
+                            }
+                    );
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                mQueueHandler.addToRequestQueue(postRequest);
+            }
+        }
+    }
+
+    @Override
+    public void onError(final AIError error) {
+        Log.d(TAG, Cons.onError);
+    }
+
+    @Override
+    public void onAudioLevel(float level) {
+
+    }
+
+    @Override
+    public void onListeningStarted() {
+
+    }
+
+    @Override
+    public void onListeningCanceled() {
+
+    }
+
+    @Override
+    public void onListeningFinished() {
+
+    }
+
+    @Override
+    public void onCancelled() {
+        Log.d(TAG, Cons.onCancelled);
+    }
+
+
+    public void onVoiceBookingResponse(JSONObject response) {
+
+        VoiceRecognitionResponse mVoiceResponse = null;
+
+        try {
+            mVoiceResponse = mMapper.readValue(response.toString(), VoiceRecognitionResponse.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Refresh List
+        getBookingList(false);
+
+
+        if (mVoiceResponse != null) {
+            String speech = mVoiceResponse.getFulfillmentMessages();
+
+            // Message
+            Toast.makeText(mActivity.getBaseContext(), speech, Toast.LENGTH_LONG).show();
+
+            // Speak message
+            TTS.speakOut(speech, mTTSId);
+        }
+
+    }
