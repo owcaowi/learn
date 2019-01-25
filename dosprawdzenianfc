@@ -1,0 +1,348 @@
+package de.vispiron.carsync.fahrtenbuch.activities;
+
+import android.annotation.SuppressLint;
+import android.app.PendingIntent;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.nfc.NfcAdapter;
+import android.nfc.Tag;
+import android.nfc.tech.MifareClassic;
+import android.nfc.tech.MifareUltralight;
+import android.nfc.tech.NdefFormatable;
+import android.nfc.tech.NfcA;
+import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
+import android.view.View;
+import android.webkit.WebView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.math.BigInteger;
+import java.util.HashMap;
+
+import butterknife.BindView;
+import de.vispiron.carsync.fahrtenbuch.R;
+import de.vispiron.carsync.fahrtenbuch.application.AppComponent;
+import de.vispiron.carsync.fahrtenbuch.models.RestError;
+import de.vispiron.carsync.fahrtenbuch.rest.JsonRestCall;
+import de.vispiron.carsync.fahrtenbuch.utils.Cons;
+
+/**
+ * Activity updated by: Matej Sluka, 2019-01-21
+ * <p>
+ * This activity will accept certain NFC Tags only when it is in foreground.
+ * We do not want this activity to be called to foreground by new nfc event, therefore the intent filter is defined here and not in Manifest.xml
+ * Once the activity runs it will directly consume and resolve NFC intent. (No extra confirmation by user required)
+ * <p>
+ * There are currently 2 types of NFC Tags used:
+ * 'old' : square sticker, with tech: Mifare UltraLight
+ * 'new' : round sticker, with tech: Mifare Classic
+ */
+public class PerformLicenceCheckActivity extends MenuActivity {
+
+    public static final String TAG = "PerformLicenceCheckActivity";
+
+    private NfcAdapter nfcAdapter;
+    private String mRFid;
+
+    @BindView(R.id.webViewNfc)
+    WebView webView;
+
+    @BindView(R.id.user_interaction_text_view)
+    TextView txtInfoResult;
+
+
+    /**
+     * Definition which intents will be accepted by this Activity
+     */
+    private static final IntentFilter[] filters = new IntentFilter[]
+            {
+                    new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED)
+            };
+
+    /**
+     * List of technologies this Activity will respond to. If another Tag will be discovered, activity will not try to read it
+     */
+    private static final String[][] techLists = new String[][]{
+            {
+                    NfcA.class.getName(),
+                    MifareClassic.class.getName(),     // new
+                    MifareUltralight.class.getName(),  // old
+                    NdefFormatable.class.getName(),
+            }
+    };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_perform_licence_check);
+        mToolbarTitle.setText(getResources().getString(R.string.perform_license_check));
+
+        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+
+        webView.loadUrl("file:///android_asset/nfc.html");
+
+        if (nfcAdapter == null) {
+            showDialogNfcNotSupported();
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (nfcAdapter == null) {
+            nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        }
+
+        if (nfcAdapter == null) {
+            return;
+        }
+
+        if (!nfcAdapter.isEnabled()) {
+            showDialogNfcNotActivated();
+        }
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+        nfcAdapter.enableForegroundDispatch(this, pendingIntent, filters, techLists);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if (nfcAdapter == null) {
+            nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        }
+
+        if (nfcAdapter == null) {
+            return;
+        }
+
+        nfcAdapter.disableForegroundDispatch(this);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        performTagOperations(intent);
+    }
+
+    private void performTagOperations(Intent intent) {
+
+        String rfid = null;
+
+        String action = intent.getAction();
+        if (action != null && (action.equals(NfcAdapter.ACTION_TAG_DISCOVERED) ||
+                action.equals(NfcAdapter.ACTION_TECH_DISCOVERED))) {
+
+            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+            processNfcTag(tag);
+            readMifareUltralight(tag);
+        }
+    }
+
+
+    private void processNfcTag(Tag tag) {
+
+        String rfid = null;
+
+        if (tag == null) {
+            return;
+        }
+
+        //TODO
+        for (String tech : tag.getTechList()) {
+            if (tech.equals(MifareUltralight.class.getName())) {
+                //      mPerformLicenceCheckFragment.readOldTag(MifareUltralight.get(tag));
+                rfid = readMifareUltralight(tag);
+            }
+
+            if (tech.equals(MifareUltralight.class.getName())) {
+                Log.d("","");
+                //     mPerformLicenceCheckFragment.readNewTag(MifareClassic.get(tag));
+            }
+        }
+
+        //String rfid = bytesToHexString(tag.getId());
+        Toast.makeText(this, "TAG ID: " + rfid, Toast.LENGTH_SHORT).show();
+
+        if (rfid != null) {
+            serverValidation(rfid);
+        }
+    }
+
+    public static String bytesToHexString(byte[] src) {
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        if (src == null || src.length <= 0) {
+            return null;
+        }
+
+        char[] buffer = new char[2];
+        for (int i = 0; i < src.length; i++) {
+            buffer[0] = Character.forDigit((src[i] >>> 4) & 0x0F, 16);
+            buffer[1] = Character.forDigit(src[i] & 0x0F, 16);
+            System.out.println(buffer);
+            stringBuilder.append(buffer);
+        }
+        return stringBuilder.toString();
+    }
+
+    @Override
+    protected void injectComponent(AppComponent component) {
+        component.inject(this);
+    }
+
+    public void back(View view) {
+        this.onBackPressed();
+    }
+
+    /**
+     * Dialog informs user, that his device is not equipped with NFC chip
+     */
+    private void showDialogNfcNotSupported() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.nfc_not_supported_label));
+        builder.setMessage(getString(R.string.nfc_not_supported_text));
+        builder.setIcon(R.drawable.ic_id_contro);
+        builder.setCancelable(false);
+
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                PerformLicenceCheckActivity.this.finish();
+            }
+        });
+
+        builder.create().show();
+    }
+
+    /**
+     * Dialog informs user, that he needs to go to device settings to turn on NFC
+     */
+    private void showDialogNfcNotActivated() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.nfc_disabled_label));
+        builder.setMessage(getString(R.string.nfc_disabled_text));
+        builder.setIcon(R.drawable.ic_id_contro);
+        builder.setCancelable(false);
+
+        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                //open System Settings
+                startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
+            }
+        });
+
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                PerformLicenceCheckActivity.this.finish();
+            }
+        });
+
+        builder.create().show();
+    }
+
+
+    private void serverValidation(String rfid) {
+
+
+        HashMap<String, String> params = new HashMap<>();
+        params.put("rfid", rfid);
+
+        JsonRestCall restCall = new JsonRestCall(Request.Method.POST, Cons.mLicenceCheck, new JSONObject(params), PerformLicenceCheckActivity.this,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        if (response != null) {
+
+                            // Toast.makeText(PerformLicenceCheckActivity.this, response.toString(), Toast.LENGTH_LONG).show();
+
+                            txtInfoResult.setText(response.toString());
+
+                        }
+                    }
+
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+                //* Show Error *//*
+                if (volleyError.networkResponse != null && volleyError.networkResponse.data != null) {
+                    VolleyError error = new VolleyError(new String(volleyError.networkResponse.data));
+                    String errorMessage = mSerializationHelper.fromJson(error.getMessage(), RestError.class).getError();
+                    //Toast.makeText(PerformLicenceCheckActivity.this, errorMessage, Toast.LENGTH_LONG).show();
+
+                    txtInfoResult.setText(errorMessage);
+
+                }
+            }
+        }
+        );
+        mQueueHandler.addToRequestQueue(restCall);
+    }
+
+    @SuppressLint("LongLogTag")
+    private String readMifareUltralight(Tag tag) {
+
+        MifareUltralight mifare = MifareUltralight.get(tag);
+        String rfid = null;
+
+        try {
+            mifare.connect();
+
+            byte[] payload = mifare.readPages(4);
+            rfid = getFormattedCode(payload);
+
+
+        } catch (IOException e) {
+            Log.d(TAG, Log.getStackTraceString(e) );
+        } finally {
+            if (mifare != null) {
+                try {
+                    mifare.close();
+                } catch (IOException e) {
+                    Log.d(TAG, Log.getStackTraceString(e));
+                }
+            }
+        }
+        return rfid;
+    }
+
+    private String getFormattedCode(byte[] payload) {
+
+        String format = "%0" + (payload.length * 2) + "X";
+        String rfidOriginal = String.format(format, new BigInteger(1, payload));
+        String separator = "-";
+
+        String rfidFormatted = new StringBuilder()
+                .append(rfidOriginal.substring(10, 12))
+                .append(separator)
+                .append(rfidOriginal.substring(8, 10))
+                .append(separator)
+                .append(rfidOriginal.substring(4, 6))
+                .append(separator)
+                .append(rfidOriginal.substring(2, 4))
+                .append(separator)
+                .append(rfidOriginal.substring(0, 2))
+                .toString();
+
+        return rfidFormatted;
+    }
+
+
+}
