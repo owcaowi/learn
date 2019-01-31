@@ -59,7 +59,7 @@ public class NFCActivity extends AppCompatActivity {
         return null;
     }
 
-    public String readMifareUltralight(Tag tag) {
+    private String readMifareUltralight(Tag tag) {
 
         MifareUltralight mifare = MifareUltralight.get(tag);
         String rfid = null;

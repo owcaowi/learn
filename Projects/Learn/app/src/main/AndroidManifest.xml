@@ -13,15 +13,21 @@
         android:name="android.hardware.camera"
         android:required="false" />
 
-    <uses-sdk android:minSdkVersion="15" android:targetSdkVersion="28" />
+    <uses-sdk
+        android:minSdkVersion="15"
+        android:targetSdkVersion="28" />
 
     <application
-        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:appComponentFactory">
+        tools:replace="android:appComponentFactory"
+        android:appComponentFactory="compFactory"
+        >
+
+        <!--tools:replace="android:appComponentFactory"-->
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -50,8 +56,7 @@
         <activity
             android:name=".PushService.PushActivity"
             android:label="@string/title_activity_push"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
             android:name=".NFCActivity"
@@ -71,9 +76,9 @@
             android:name=".Service.MyService"
             android:exported="false" />
         <!--<service android:name=".Push.PushService">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="com.google.firebase.MESSAGING_EVENT" />-->
-            <!--</intent-filter>-->
+        <!--<intent-filter>-->
+        <!--<action android:name="com.google.firebase.MESSAGING_EVENT" />-->
+        <!--</intent-filter>-->
         <!--</service>-->
 
         <provider

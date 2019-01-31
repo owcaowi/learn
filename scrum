@@ -1,0 +1,108 @@
+
+------------------------
+		Scrum
+------------------------
+
+Celem Scrumu jest:
+- usprawnienie pracy 
+- osiąganie lepszych wyników przy takiej samej pracy
+
+Najważniejsze założenia:
+- Ludzie i intereakcje > Procesów
+- Działające funkcjonalności > dokumentacja
+- współpraca z klientem > Umowa
+- reagowanie na zmiany > pogoń dla planu
+
+Sprint:
+- mniej więcej co 2 tygodnie nowy
+- każdy powinien być tej samej długości
+- zaczyna się planowaniem Spintu
+- kończy Sprint Review oraz Retrospekcją
+- w trakcie sprintu odbywają się Daily Scrum 
+
+Daily Scrum:
+- to samo miejsce kazdego dnia
+- max 15 min
+- bierze udział Scrum Master oraz Development team
+- dyskusja kto co robi
+- kazdy może wziąć udział ale tylko Team mówi
+- pytania które muszą paść:
+  * co zrobiłem od ostatniedo daily scramu
+  * co mi przeszkadza
+  * co planuję do następnego daily scramu zrobić
+
+Ceremonie:
+- planowanie sprintu
+- sprint review
+- retrospekcja sprintu
+
+Sprint planung:
+- co jest celem sprintu
+- budowa sprint backlogow
+- podział zadan na taski (z reguły 1 task < dzien)
+- pszacowanie tasków
+
+Sprint Review:
+- sprawdzane tylko funkcjonalnosci ktore były przewidziane na dany sprint
+
+Retrospekcja Sripntu:
+- wyciaganie wniosków 
+
+User stories / Epics / Themes
+- US - Opisane prozą działania jakie mają być osiągniete
+		np. jako admin chciałbym zmienić język aby zrozumieć system
+- Epics - duże storys które nie pasują do jednego Sprintu
+- Themen - zgrupowane stories
+
+
+Poker:
+- Jeżeli developerzy podali skrajne wartości to dyskusja
+
+Proitet zadań:
+- jak ważne jest zadania dla wykonania całego projektu
+- jak duże jest ryzyko niewykonania
+- najpierw zadania ktore sa wazne i trudne do wykonaia
+- później ważne i małe ryzyko
+- małe ryzyko mała wartość 
+- mała wartość wysokie ryzyko - nie realizować
+
+Role:
+- Scrum master 
+- Product ovner
+- Developers team
+
+Scrum master:
+- pomaga teamowi w ich przeszkodach
+- pilnuje przestrzegania regół
+- pilnuje czy team jest zorganizowany
+- nie może być product ownerem
+- nie ma nic wspólnego z zadaniami i delegowaniem ich
+
+Scrum Team:
+- pracuje bardzo blisko z teamem
+- ma kontakt z klientami
+- definjuje oczekiwania
+- prioretyzuje je
+
+Developers team:
+- 5-9 osób
+- sami organizują sobie pracę
+- idealnie są oni full time
+- posiadają dobry back log (który jest tylko dla nich stworzony)
+- powinni ze sobą blisko współpracować
+
+Definicje:
+- Definition of ready ( czy mam wszystkie informacje by zacząć implementować), spełniają kryterie INVEST
+- Definion of done (czy moja implementacja jest skonczona i mozna ja przedstawić na sprint review)
+
+INVEST Kryteria:
+- Isolated (możeliwie od siebie nie zależne)
+- Negotiable (sposób realizacji powinien być do uzgodnienia np. android button po innej stronie)
+- Valueable (powinno mieć dla product ownera wartość)
+- Estimatable (musi dać się oszacować czas wykonaia)
+- Small (max 1/3 sprintu)
+- Testable (możliwe do przetestowania)
+
+
+
+
