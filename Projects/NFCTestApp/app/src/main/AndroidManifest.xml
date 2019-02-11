@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.aprzybylo.nfctestapp">
 
+    <uses-permission android:name="android.permission.NFC" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,7 +18,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".NfcBackgroundActivity"
+            android:name=".NfcActivity"
             android:label="@string/title_activity_nfc_background"
             android:theme="@style/AppTheme.NoActionBar">
 

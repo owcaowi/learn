@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">NFCTestApp</string>
     <string name="title_activity_nfc_background">NfcBackgroundActivity</string>
+    <string name="confirm">ok</string>
+    <string name="nfc_dialog_title">NFC Title</string>
+    <string name="nfc_dialog_success">NFC Success</string>
 </resources>
