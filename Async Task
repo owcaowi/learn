@@ -1,0 +1,12 @@
+
+-------------------------
+	   Async Task
+-------------------------
+
+Klasa która pozwala na wykonywanie krótkich operacji asynchronicznie w tle.
+
+Method execution:
+- onPreExecute() - to set up task
+- doInBackground() - perform actual task w backgroundzie
+- onProgressUpdate() - updatowanie statusu
+- onPostExecute() - dostarcza resultu i kończy pracę

@@ -1,0 +1,28 @@
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        var array1 = arrayOf(1,2,3,4,5)
+        var array2 = arrayOf(1,1,1,1,1)
+
+        var sum = addTwoValues(array1, null)
+        Log.d("","")
+
+    }
+
+
+    fun addTwoValues(value1: Array<Int>, value2: Array<Int>?): Array<Int>{
+
+        var result = Array<Int>(value1.size,{0})
+
+
+        value2?.let {
+            for(x in value1.indices ){
+                for(y in value2.indices){
+                    result[x] = value1[x] + value2[y]
+                }
+            }
+        }
+
+        return result
+    }

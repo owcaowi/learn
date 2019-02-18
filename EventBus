@@ -1,0 +1,38 @@
+
+-------------------------
+        Event Bus
+-------------------------
+
+Versja 3.0.0
+
+
+Pros:
+- dobre dla wprowadzania malych zmian na UI
+
+Cons:
+- łańcuchowe wywołania, trudne to maintain
+- wprowadza nie porządek w kodzie kiedy za dużo metod onEvent()
+- może być mylące kto powiadamia kogo o czym
+- dużo klas
+
+
+-----------------------
+	  Butterknife
+-----------------------
+
+Butterkife is a view injection lib for android.
+Usówa Boilerplate code.
+
+
+
+-----------------------
+	     Gson
+-----------------------
+Biblioteka służąca do serializacji i deserializacji z/do formatu JSON.
+
+
+
+-----------------------
+	   Dagger 2
+-----------------------
+Używany do dependency injection. 
