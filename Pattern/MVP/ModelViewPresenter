@@ -19,7 +19,7 @@ View nie ma dostępu do modelu.
 
 Budowa: 
 
-- Activity/Fragment pełni fyunkcję widoku. Znajdują się w nim wszystkie 
+- Activity/Fragment pełni funkcję widoku. Znajdują się w nim wszystkie 
 metody związane ze zmianą widoku. (pokaż produkty, ukryj test) W zależności 
 od tego co kliknie użytkownik na widoku to taka metoda Prezentera zostanie wywołana. 
 

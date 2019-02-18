@@ -1,0 +1,47 @@
+
+
+--------------------------
+	     Patterny
+--------------------------
+
+Możemy podzielić na 3 grupy:
+
+PATTERNY TWORZĄCE
+-----------------
+- Singelton
+Umożliwia stworzenie tylko jednej instancji klasy. Zapewnie globalny dostęp do obiektu. 
+
+- Dependency Injection 
+Przekazanie gotowych instancji obiektów zamiast tworzenia ich w konstruktorze. 
+Plusy: tworzenie łatwo testowalnego kodu
+
+- Builder 
+(Rozdzielenie sposobu tworzenia obiektów. Proces tworzenia rozdzielony jest na kilka mniejszych etapów. Umożliwia stworzenie kilku różnych reprezentacji obiektów w jednym procesie konstrukcyjnym. Standardowo wzorzec składa się z dwóch podstawowych obiektów. Pierwszy z nich oznaczony jest jako Budowniczy – jego celem jest dostarczenie interfejsu do tworzenia obiektów nazywanych w tym kontekście produktami[1][4]. Drugim obiektem jest obiekt oznaczony jako Konkretny Budowniczy, a jego celem jest tworzenie konkretnych reprezentacji produktów przy pomocy zaimplementowanego interfejsu Budowniczego)
+
+- Fabryka obiektów
+
+
+
+
+WZORCE STRUKTURALNE
+---------------------
+
+- Adapter
+Umożliwia dwum niekompatybilnym klasom pracować razem. Zmienia interfejs obiektu wekjściowego na interfejs oczekiwany przez drugi obiekt. 
+
+- Fasada
+Dostarcza interfejsu, który ułatwia obsługę zbioru innych interfejsów.  Przykład Retrofit. Im mniej obiekt wie o tym co dzieje się w tle tym łatwiej w przyszłości wprowadzić zminay. 
+
+
+
+
+WZORCE ZACHOWAŃ (sposób komunikacji między obiektami)
+--------------------------------------------------------
+
+- Observer
+Definjuje zależność 1:wiele między obiektami. Jeżeli jeden ulegnie zmianie inne są o tym powiadomione. Przykład RxAndroid. Mamy 2 typy obiektów Observable i Subscriber. Observable emituje pewne wartości jako stream. Obiekty Subscriber reagują kiedy te wartości przyjdą. Przykład: Możesz zrobić Api call i czekać na reakcję dopóki server nie zwróci odp.
+
+- Model-View-Presenter / Model-View-ViewModel
+W tradycyjnej architekturze Androida (MVC) Activity jest widokiem i Controlerem co utrudnia zrobienie testów. (mvc_model)
+Celem użycia MVP jest odseparowanie Controlera od Widoku, żeby ułatwić testowanie. Każdy view ma presentera, każdy presenter ma swojego view. (relacja 1:1) View informuje Presentera o akcjach. Presenter wywoluje akcje i updatuje view. View nie ma dostępu do modelu.
+
