@@ -1,0 +1,28 @@
+--------------------
+	   SOLID
+--------------------
+
+1. SINGLE RESPONSIBILITY
+Klasa powinna mieć tylko jedną odpowiedzialność. 
+Powinien istnieć tylko jeden powód do zmiany klasy.
+W praktyce. Więcej klas ale mniej kodu w środku.
+
+2. OPEN/CLOSED PRINCIPLE
+Klasy, moduły oraz funkcje powinny być otwarte na rozszerzenie ale zamknięte na modyfikacje.
+W praktyce oznacza to np., że nie powinno się zmieniać klas bazowych kiedy dodajemy nową
+klasę dziedziczącą po nich. Sprawdzenie typu czy klasa jest instancją xyz ...
+
+3. LISKOV SUBSTITUTION
+Obiekty muszą być zamienialne z instancjami swoich subclass bez wprowadzania większych zmian w kodzie.
+Przykład klasa kwadrat która dziedziczy po prostokąt. Używając klasy kwadrat oraz prostokąt 
+nie powinniśmy zbyt wiele myśleć chcąc obliczyć pole.
+
+4.INTERFACE SEGREGATION
+Wiele małych interfejsów zamiast jednego ogólnego.
+Klasy nie powinny implementować metod których nie używają.
+
+5. DEPENDENCY INVERSION
+Wysokopoziomowe moduły nie powinny zależeć od modułów niskopoziomowych. Zależności powinny 
+wynikać z abstrakcji.
+
+Przykład z delivery Servicei Delivery Driver.
