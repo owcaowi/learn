@@ -36,3 +36,11 @@ Biblioteka służąca do serializacji i deserializacji z/do formatu JSON.
 	   Dagger 2
 -----------------------
 Używany do dependency injection. 
+
+
+--------------------
+	   RxJava
+--------------------
+
+Biblioteka która umożliwia tworzenie asynchronicznych opartych na eventach aplikacji.
+Używa patternu observer.
