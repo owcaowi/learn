@@ -1,0 +1,25 @@
+-------------------------
+		Live Data
+-------------------------
+
+- Klasa, która jest obserwowanym data holderem. 
+- lifecycle-aware
+- LiveData only updates app component observers that are in an active lifecycle state.
+
+
+Jak to działa?
+--------------
+
+- jest obiekt klasy Observer, który jest aktywny gdy lifecycle jest onstarted albo on resume
+- lifedata powiadamia observer o zmianach 
+- observery które nie są aktywne nie są powiadamiane
+
+
+
+Zalety używania LiveData:
+--------------------------
+- Always up to date data (background/foreground, on orientation change)
+- No more manual lifecycle handling
+- zapewnia zgodność UI z danymi
+- nie ma memory leaks (Observers are cleaned up when life cycle is destroyed)
+- no crashes when activity stoped

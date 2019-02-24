@@ -1,0 +1,54 @@
+1) Co to jest JetPack?
+Kolekcja Android software Components.
+
+2) Co to jest android JetPack Components?
+Kolekcja bibliotek, które można razem połączyć aby być bardziej produktywnym.
+Główne zastosowanie przy Kotlinie.
+
+Komponenty można podzielić na:
+
+- Foundation (Takie które dostarczą kompatybilności wstecznej,testowania oraz wsparcia dla Kotlina.)
+------------
+ Test - dla Unit and UI testów
+ MultiDex - suport dla aplikacji z mutiDex plikami
+ AppCompact (kompatybilnosc wsteczna)
+  
+- Architecture (Aplikacje łatwiejsze w testowaniu i easier to mantain)
+--------------
+ LiveData
+ ViewModel (class allows data to survive configuration changes such as screen rotations.)
+ Data Binding - bind observable data to view model
+ Room - SQL DataBase access
+
+- Behaviour
+------------
+ Download manager - Download Manager
+ Permissions - check and request app permissions
+ Notification - kompatybilnosc wteczna dla notyfikacji API
+ 
+
+- UI (Widget and helpers)
+----
+ Fragment
+ TV
+ Wear OS by Google
+
+
+3) Co to jest DexFile
+Dalvik executable format
+Programy Androida jest skompilowany do tak zwanego dex file (Dalvik Executable Format). 
+Format apk to spakowane pliki dex oraz .
+
+4) Dalvik 
+Maszyna wirtualna oraz środowisko uruchomieniowe systemu Android.
+
+5) Proguard
+Command line tool, który zmniejsza optymalizuje kod Javy. Jest w stanie wykryć i usunąć 
+pewne instrukcje z kompilowanego bytecodu.
+
+6) ANR (Application Not Responding)
+Dialog pokazywany jest wtedy gdy aplikacja działa powolnie i zajmuje jej dużo czasu żeby odpowiedzieć.
+Jeżeli robisz dużo operacji na głównym wątku system daje Userowi możliwośc zamknięcia aplikacji.
+Żeby go nie widzieć trzeba robić długo trwające operacje na working tread a main tread przeznaczyc 
+na reakcje dla usera.
+
