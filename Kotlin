@@ -1,0 +1,101 @@
+-------------------------
+		 Kotlin
+-------------------------
+
+1. Difference between val and var?
+
+val - can't be changed (more like final in Java)
+var - can be reassigned but must be the same data type
+
+
+
+2. Null Safety and Nullable Type
+Nullable Types Int?, Float?, String?
+Act like wrapper types and can hold null value
+Used to prevent Null Pointer Exception
+
+Elvis operator unwrap value from nullable types. 
+If value is null you can choose default value or ignore.
+
+var abc: String = zmienna?: "default"
+jeżeli zmienna ma wartość różną od null to zobaczymy zmienna
+jeżeli null to zobaczymy "Default"
+
+
+3. const vs val
+val - set in runtime, 
+const - compile time constant, cannot be used with var, cannot be used with local variable
+
+
+4. Entry point 
+main class 
+
+
+5. !! vs ?
+
+!! is used to force unwrap nullable types. You have to be sure that the value is 
+not null because you will get runtime exception otherwise. 
+
+Jeżeli chcesz bezpiecznie unwrap value to użyj lambda expresion
+
+str.let{
+	....
+}
+
+
+6.  Why are Kotlin functions known as top-level functions?
+you can declare it on the root of the file
+
+
+7. == vs ===
+
+== - if objects are equals
+=== - if references are equals
+
+
+8. Visibility modifier (TODO)
+- public (default)
+- internal
+- protected
+- private
+
+
+9. Klasy w kotlinie są z default final żeby po nich dzidziczyć trzeba nadać przedrotek open
+
+10. Types of constructor
+- Primary (defined in class header, no logic)
+- Secondary (defined in body, can be more then one secondary constructor)
+
+By default the values in constructor are val unles you write var.
+
+11. Init block (TODO)
+
+12. String interpolation (wartosci w stringu)
+- $ sign
+
+13. Data classes
+- pozwalają nam na pozbycie się boilerplatowego kodu getterów setterów, toString, hash i copy
+
+14. destructuring declarations (TODO)
+assign multiple values to variables from data stored in objects/arrays.
+
+15. inline, infix function
+inline - like in java 
+infix - withaut brackets
+
+16. Lazy and lateinit
+used to delay the property initializations 
+
+lazy - lambda expresion, set on val. Val will be created on runtime
+lateinit - modifier set to var used to set the value at later point
+
+17. Singelton. pattern
+object keyword
+
+18. static class in Kotlin
+companion object block
+
+19. Extension functions
+Some kind of utility classes attatched to object they are working on
+
+
