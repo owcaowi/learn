@@ -1,0 +1,6 @@
+export PS1="\[\033[1;34m\]\u\[\033[0;37m\]|\[\033[0;32m\]\w:\[\033[0;37m\] "
+
+alias platform='cd /Users/aprzybylo/Library/Android/sdk/platform-tools'
+alias android_studio='cd /Users/aprzybylo/Documents/Android_Projects/'
+alias install_apk='cd /Users/aprzybylo/Library/Android/sdk/platform-tools; ./adb install $1'
+alias update_apk='cd /Users/aprzybylo/Library/Android/sdk/platform-tools; ./adb install -r $1'
